@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYPERLOCO LLC — Spatial Intelligence Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f7f5f0;
+    --cream: #fffdf8;
+    --accent: #0f5c3a;
+    --accent-bright: #17a362;
+    --accent-light: #e6f5ed;
+    --signal: #e85d3a;
+    --signal-light: #fef0ec;
+    --blue: #1a4f8b;
+    --blue-light: #e8f0fa;
+    --warm: #c8956c;
+    --mono: 'Space Mono', monospace;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ═══════════════════════════════════════════
+     NAV
+  ═══════════════════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(247, 245, 240, 0.92);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(10,10,10,0.05);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .nav-logo .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--accent-bright);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2.5s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--ink) !important;
+    color: var(--paper) !important;
+    padding: 0.55rem 1.4rem !important;
+    opacity: 1 !important;
+    transition: all 0.25s !important;
+  }
+
+  .nav-cta:hover { background: var(--accent) !important; transform: translateY(-1px); }
+
+  /* ═══════════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    padding: 6rem 3rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content { z-index: 2; }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 2px;
+    background: var(--accent-bright);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+    line-height: 1.06;
+    font-weight: 400;
+    margin-bottom: 1.8rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    max-width: 540px;
+    line-height: 1.75;
+    color: rgba(10,10,10,0.65);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.95rem 2.2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(15, 92, 58, 0.18);
+  }
+
+  .btn-primary .arrow { transition: transform 0.3s; }
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+
+  .btn-ghost {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.45;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .btn-ghost:hover { opacity: 1; border-bottom-color: var(--ink); }
+
+  /* Hero visual — abstract map grid */
+  .hero-visual {
+    position: relative;
+    height: 80vh;
+    max-height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .map-abstract {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(23, 163, 98, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 60%, rgba(26, 79, 139, 0.04) 0%, transparent 50%);
+    border: 1px solid rgba(10,10,10,0.06);
+    overflow: hidden;
+  }
+
+  .map-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(10,10,10,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,10,10,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .map-dot {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .map-dot.primary {
+    width: 12px; height: 12px;
+    background: var(--accent-bright);
+    box-shadow: 0 0 0 4px rgba(23,163,98,0.15), 0 0 20px rgba(23,163,98,0.1);
+  }
+
+  .map-dot.secondary {
+    width: 7px; height: 7px;
+    background: var(--signal);
+    opacity: 0.6;
+  }
+
+  .map-dot.tertiary {
+    width: 5px; height: 5px;
+    background: var(--blue);
+    opacity: 0.35;
+  }
+
+  .map-label {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10,10,10,0.25);
+    white-space: nowrap;
+  }
+
+  .map-zone {
+    position: absolute;
+    border: 1px dashed rgba(23,163,98,0.15);
+    border-radius: 50%;
+  }
+
+  .map-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(10,10,10,0.06), transparent);
+    transform-origin: left center;
+  }
+
+  .map-card {
+    position: absolute;
+    background: white;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    border-left: 3px solid var(--accent-bright);
+    max-width: 200px;
+    z-index: 2;
+  }
+
+  .map-card .card-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .map-card .card-value {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  .map-card .card-sub {
+    font-size: 0.72rem;
+    color: rgba(10,10,10,0.45);
+    margin-top: 0.25rem;
+  }
+
+  /* ═══════════════════════════════════════════
+     WHAT WE DO — Service Pillars
+  ═══════════════════════════════════════════ */
+  .services-section {
+    padding: 8rem 3rem;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 5rem;
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    line-height: 1.1;
+    max-width: 700px;
+    font-weight: 400;
+  }
+
+  .section-subtitle {
+    max-width: 560px;
+    color: rgba(10,10,10,0.55);
+    line-height: 1.75;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .pillar {
+    padding: 2.5rem 2rem;
+    background: var(--cream);
+    border: 1px solid rgba(10,10,10,0.04);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar:hover {
+    border-color: rgba(10,10,10,0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.04);
+  }
+
+  .pillar-icon {
+    width: 40px; height: 40px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .pillar h3 {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .pillar p {
+    color: rgba(10,10,10,0.55);
+    line-height: 1.7;
+    font-size: 0.88rem;
+  }
+
+  .pillar-examples {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(10,10,10,0.06);
+  }
+
+  .pillar-example {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    padding: 0.35rem 0;
+    line-height: 1.5;
+  }
+
+  .pillar-example::before {
+    content: '↳ ';
+    opacity: 0.4;
+  }
+
+  /* ═══════════════════════════════════════════
+     CAPABILITIES STRIP
+  ═══════════════════════════════════════════ */
+  .capabilities {
+    padding: 4rem 3rem;
+    background: var(--ink);
+    overflow: hidden;
+  }
+
+  .cap-scroll {
+    display: flex;
+    gap: 4rem;
+    animation: scrollCaps 30s linear infinite;
+    width: max-content;
+  }
+
+  @keyframes scrollCaps {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .cap-item {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: rgba(245,242,235,0.2);
+    white-space: nowrap;
+    font-style: italic;
+    flex-shrink: 0;
+  }
+
+  .cap-item.highlight { color: rgba(23,163,98,0.6); }
+
+  .cap-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: rgba(245,242,235,0.15);
+    border-radius: 50%;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════════════
+     USE CASES — Expanded Audience
+  ═══════════════════════════════════════════ */
+  .usecases-section {
+    padding: 8rem 3rem;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(10,10,10,0.08);
+    margin-top: 5rem;
+  }
+
+  .usecase {
+    background: var(--paper);
+    padding: 3rem 2.5rem;
+    transition: all 0.35s;
+    position: relative;
+  }
+
+  .usecase:hover { background: var(--cream); }
+
+  .usecase-tag {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tag-journalism { background: var(--signal-light); color: var(--signal); }
+  .tag-urban { background: var(--accent-light); color: var(--accent); }
+  .tag-brand { background: #f3eeff; color: #6b3fa0; }
+  .tag-realestate { background: var(--blue-light); color: var(--blue); }
+  .tag-startup { background: #fff8e6; color: #a67c00; }
+  .tag-community { background: #fce8ec; color: #b8354c; }
+
+  .usecase h3 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .usecase p {
+    color: rgba(10,10,10,0.55);
+    line-height: 1.7;
+    font-size: 0.88rem;
+  }
+
+  .usecase-prompt {
+    margin-top: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: rgba(10,10,10,0.35);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ═══════════════════════════════════════════
+     AI + MAPBOX DIFFERENTIATOR
+  ═══════════════════════════════════════════ */
+  .diff-section {
+    padding: 8rem 3rem;
+    background: var(--accent);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diff-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .diff-section .section-number { color: rgba(255,255,255,0.4); }
+
+  .diff-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    line-height: 1.12;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  .diff-title em { font-style: italic; color: var(--accent-bright); color: #8cffc0; }
+
+  .diff-body {
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .diff-body p { margin-bottom: 1.25rem; }
+
+  .diff-cards {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .diff-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem 1.75rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+
+  .diff-card:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .diff-card h4 {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: #8cffc0;
+  }
+
+  .diff-card p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+
+  .diff-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════════
+     ABOUT
+  ═══════════════════════════════════════════ */
+  .about-section {
+    padding: 8rem 3rem;
+    background: var(--cream);
+  }
+
+  .about-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-left {
+    position: sticky;
+    top: 8rem;
+  }
+
+  .about-name {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    margin-bottom: 0.4rem;
+    font-weight: 400;
+  }
+
+  .about-role {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .about-bio {
+    color: rgba(10,10,10,0.65);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .about-bio p { margin-bottom: 1.2rem; }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(10,10,10,0.06);
+  }
+
+  .proof-item {
+    background: var(--cream);
+    padding: 1.75rem 2rem;
+    transition: all 0.3s;
+  }
+
+  .proof-item:hover { background: white; }
+
+  .proof-value {
+    font-family: var(--mono);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .proof-label {
+    font-size: 0.78rem;
+    color: rgba(10,10,10,0.45);
+    line-height: 1.4;
+  }
+
+  .cred-list {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1px;
+    background: rgba(10,10,10,0.06);
+  }
+
+  .cred-item {
+    background: var(--cream);
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+  }
+
+  .cred-item:hover { background: white; }
+
+  .cred-bullet {
+    width: 6px; height: 6px;
+    background: var(--accent-bright);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cred-item span { color: rgba(10,10,10,0.6); }
+
+  /* ═══════════════════════════════════════════
+     CTA
+  ═══════════════════════════════════════════ */
+  .cta-section {
+    padding: 8rem 3rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .cta-section h2 {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-section h2 em { font-style: italic; color: var(--accent); }
+
+  .cta-sub {
+    color: rgba(10,10,10,0.55);
+    max-width: 520px;
+    margin: 0 auto 3rem;
+    line-height: 1.75;
+    font-size: 1.05rem;
+  }
+
+  .inquiry-form {
+    text-align: left;
+    background: white;
+    padding: 3rem;
+    box-shadow: 0 2px 30px rgba(0,0,0,0.04);
+    max-width: 640px;
+    margin: 0 auto;
+    border: 1px solid rgba(10,10,10,0.04);
+  }
+
+  .form-group { margin-bottom: 1.4rem; }
+
+  .form-group label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+    color: rgba(10,10,10,0.4);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(10,10,10,0.1);
+    background: var(--paper);
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--ink);
+    transition: border-color 0.3s;
+    outline: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--accent); }
+
+  .form-group textarea { min-height: 110px; resize: vertical; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 1.05rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+  }
+
+  .form-submit:hover { background: var(--accent); transform: translateY(-1px); }
+
+  .form-note {
+    text-align: center;
+    margin-top: 1.1rem;
+    font-size: 0.75rem;
+    color: rgba(10,10,10,0.3);
+  }
+
+  /* ═══════════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════════ */
+  footer {
+    padding: 3rem;
+    border-top: 1px solid rgba(10,10,10,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.35;
+  }
+
+  .footer-right {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-right a {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+
+  .footer-right a:hover { opacity: 1; }
+
+  /* ═══════════════════════════════════════════
+     ANIMATIONS
+  ═══════════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.7s ease 0.15s both; }
+  .hero h1 { animation: fadeUp 0.7s ease 0.3s both; }
+  .hero-sub { animation: fadeUp 0.7s ease 0.45s both; }
+  .hero-actions { animation: fadeUp 0.7s ease 0.6s both; }
+  .hero-visual { animation: fadeUp 0.9s ease 0.5s both; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: all 0.65s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════ */
+  @media (max-width: 1000px) {
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-visual { height: 50vh; max-height: 400px; }
+    .pillars { grid-template-columns: 1fr; }
+    .usecase-grid { grid-template-columns: 1fr; }
+    .diff-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about-left { position: static; }
+    .services-section, .usecases-section, .cta-section { padding: 5rem 1.5rem; }
+    .diff-section, .about-section { padding: 5rem 1.5rem; }
+    nav { padding: 1rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .proof-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .capabilities { padding: 2.5rem 1.5rem; }
+    .cap-item { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-logo"><span class="logo-dot"></span> HYPERLOCO</div>
+  <ul class="nav-links">
+    <li><a href="#services">What We Do</a></li>
+    <li><a href="#usecases">Use Cases</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Work With Us</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Spatial Intelligence Studio</div>
+    <h1>Every place has<br>a <em>story.</em><br>We make it <em>visible.</em></h1>
+    <p class="hero-sub">
+      HYPERLOCO is a spatial intelligence studio. We use Mapbox, GIS, and AI to turn geography into insight — through interactive maps, data visualization, urban analysis, community engagement tools, and place-based storytelling.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Start a Project
+        <span class="arrow">→</span>
+      </a>
+      <a href="#services" class="btn-ghost">Explore services</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="map-abstract">
+      <div class="map-grid-lines"></div>
+
+      <!-- Abstract map dots -->
+      <div class="map-dot primary" style="top: 28%; left: 35%;"></div>
+      <div class="map-dot primary" style="top: 62%; left: 58%;"></div>
+      <div class="map-dot secondary" style="top: 40%; left: 65%;"></div>
+      <div class="map-dot secondary" style="top: 72%; left: 30%;"></div>
+      <div class="map-dot secondary" style="top: 22%; left: 70%;"></div>
+      <div class="map-dot tertiary" style="top: 50%; left: 20%;"></div>
+      <div class="map-dot tertiary" style="top: 35%; left: 80%;"></div>
+      <div class="map-dot tertiary" style="top: 80%; left: 50%;"></div>
+      <div class="map-dot tertiary" style="top: 15%; left: 45%;"></div>
+
+      <!-- Zone indicators -->
+      <div class="map-zone" style="top: 18%; left: 25%; width: 120px; height: 120px;"></div>
+      <div class="map-zone" style="top: 50%; left: 45%; width: 160px; height: 160px;"></div>
+
+      <!-- Lines -->
+      <div class="map-line" style="top: 32%; left: 37%; width: 180px; transform: rotate(15deg);"></div>
+      <div class="map-line" style="top: 65%; left: 32%; width: 200px; transform: rotate(-8deg);"></div>
+
+      <!-- Labels -->
+      <div class="map-label" style="top: 12%; left: 8%;">40.7128° N</div>
+      <div class="map-label" style="bottom: 8%; right: 8%;">-74.0060° W</div>
+
+      <!-- Floating cards -->
+      <div class="map-card" style="top: 15%; right: 8%;">
+        <div class="card-label">Spatial Insight</div>
+        <div class="card-value">3 patterns found</div>
+        <div class="card-sub">Cluster analysis complete</div>
+      </div>
+
+      <div class="map-card" style="bottom: 12%; left: 6%; border-left-color: var(--signal);">
+        <div class="card-label" style="color: var(--signal);">Risk Layer</div>
+        <div class="card-value">12 zones flagged</div>
+        <div class="card-sub">Vulnerability overlay active</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CAPABILITIES STRIP ═══════ -->
+<div class="capabilities">
+  <div class="cap-scroll">
+    <span class="cap-item">Interactive Mapping</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Community Engagement</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Urban Planning</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Data Visualization</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Place Branding</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Spatial Storytelling</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Climate Risk</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">AI-Powered Analysis</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Evidence-Based Design</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Geospatial Strategy</span>
+    <span class="cap-dot"></span>
+    <!-- Duplicate for seamless scroll -->
+    <span class="cap-item">Interactive Mapping</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Community Engagement</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Urban Planning</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Data Visualization</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Place Branding</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Spatial Storytelling</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Climate Risk</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">AI-Powered Analysis</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item">Evidence-Based Design</span>
+    <span class="cap-dot"></span>
+    <span class="cap-item highlight">Geospatial Strategy</span>
+    <span class="cap-dot"></span>
+  </div>
+</div>
+
+<!-- ═══════ SERVICES ═══════ -->
+<section class="services-section reveal" id="services">
+  <div class="section-header">
+    <div class="section-number">01 — What We Do</div>
+    <h2 class="section-title">Maps are the medium.<br>Intelligence is the product.</h2>
+    <p class="section-subtitle">
+      We work across industries and scales — from neighborhood storytelling to national infrastructure analysis. Every engagement starts with a question about place and ends with something you can see, share, and act on.
+    </p>
+  </div>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-icon">🗺️</div>
+      <h3>Interactive Maps &amp; Platforms</h3>
+      <p>Custom Mapbox-powered web maps that let your audience explore data spatially. From simple point maps to layered analytical platforms with filters, popups, and real-time data.</p>
+      <div class="pillar-examples">
+        <div class="pillar-example">Public-facing data explorers</div>
+        <div class="pillar-example">Internal dashboards with live spatial feeds</div>
+        <div class="pillar-example">Embeddable story maps for publications</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-icon">🏙️</div>
+      <h3>Urban Planning &amp; Analysis</h3>
+      <p>Spatial analysis for cities, developers, and communities. Map existing conditions, model proposed changes, assess infrastructure, and visualize what the future could look like.</p>
+      <div class="pillar-examples">
+        <div class="pillar-example">Existing conditions & land use mapping</div>
+        <div class="pillar-example">Proposed development visualization</div>
+        <div class="pillar-example">Infrastructure vulnerability assessment</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-icon">👥</div>
+      <h3>Community Engagement</h3>
+      <p>Maps that invite participation. Interactive tools where residents mark issues, share local knowledge, and see how plans affect their neighborhoods. Turn public input into spatial data.</p>
+      <div class="pillar-examples">
+        <div class="pillar-example">Participatory mapping workshops</div>
+        <div class="pillar-example">Digital engagement platforms</div>
+        <div class="pillar-example">Public comment visualization</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-icon">📊</div>
+      <h3>Data Visualization &amp; Evidence</h3>
+      <p>Turn datasets into spatial narratives. We specialize in making complex data visible and legible — from parcel-level financial analysis to national-scale disaster patterns.</p>
+      <div class="pillar-examples">
+        <div class="pillar-example">Policy-grade spatial evidence</div>
+        <div class="pillar-example">Publication-ready data viz</div>
+        <div class="pillar-example">Federal dataset integration & analysis</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-icon">✨</div>
+      <h3>Place Branding &amp; Storytelling</h3>
+      <p>Help cities, neighborhoods, and organizations tell their spatial story. Custom cartography, branded map experiences, and narrative-driven visualizations that build identity through geography.</p>
+      <div class="pillar-examples">
+        <div class="pillar-example">City and district identity maps</div>
+        <div class="pillar-example">Tourism & cultural asset mapping</div>
+        <div class="pillar-example">Neighborhood narrative platforms</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-icon">🤖</div>
+      <h3>AI + Geospatial</h3>
+      <p>We're building at the frontier of AI-powered spatial intelligence — automated pattern detection, natural language map queries, and predictive spatial models that reveal what human eyes miss.</p>
+      <div class="pillar-examples">
+        <div class="pillar-example">AI-assisted spatial pattern recognition</div>
+        <div class="pillar-example">Natural language → map query interfaces</div>
+        <div class="pillar-example">Predictive risk & opportunity modeling</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ USE CASES ═══════ -->
+<section class="usecases-section reveal" id="usecases">
+  <div class="section-header">
+    <div class="section-number">02 — Who We Work With</div>
+    <h2 class="section-title">If it happens somewhere, we can map it</h2>
+    <p class="section-subtitle">
+      We serve anyone who needs to understand place — whether you're investigating a story, planning a city, launching a product, or building a movement.
+    </p>
+  </div>
+
+  <div class="usecase-grid">
+    <div class="usecase">
+      <div class="usecase-tag tag-journalism">Journalism</div>
+      <h3>Investigative reporters without a data team</h3>
+      <p>You have the instinct. We provide the spatial evidence. Turn hunches about environmental injustice, housing inequity, or infrastructure failure into front-page maps.</p>
+      <div class="usecase-prompt">"Map every school within 1 mile of a Superfund site in New Jersey"</div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-tag tag-urban">Urban Planning</div>
+      <h3>Cities and agencies shaping the built environment</h3>
+      <p>Existing conditions analysis, rezoning impact visualization, hazard mitigation mapping, transportation modeling. We build the spatial tools that support better planning decisions.</p>
+      <div class="usecase-prompt">"Visualize how proposed upzoning affects flood-prone parcels in our district"</div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-tag tag-brand">Place Branding</div>
+      <h3>Cities and districts defining their identity</h3>
+      <p>Custom cartography and interactive experiences that help places tell their story — cultural corridors, economic assets, neighborhood character, tourism routes. Maps as brand.</p>
+      <div class="usecase-prompt">"Create an interactive cultural asset map for our downtown arts district"</div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-tag tag-realestate">Real Estate &amp; Finance</div>
+      <h3>Developers and investors making location decisions</h3>
+      <p>Site selection, climate risk overlay, demographic analysis, competitive landscape mapping — all at the parcel level. See what spreadsheets can't show you.</p>
+      <div class="usecase-prompt">"Show flood risk vs. property appreciation trends in coastal North Carolina"</div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-tag tag-community">Community &amp; Advocacy</div>
+      <h3>Organizations building evidence for change</h3>
+      <p>Turn your cause into a visual argument. Participatory maps, equity analysis, resource gap visualization. Show funders and legislators where the need is — and who's being left behind.</p>
+      <div class="usecase-prompt">"Build an interactive tool where residents can map barriers to transit access"</div>
+    </div>
+
+    <div class="usecase">
+      <div class="usecase-tag tag-startup">Startups &amp; Tech</div>
+      <h3>Companies building with location intelligence</h3>
+      <p>Market opportunity mapping, coverage gap analysis, spatial product features. If your product touches the real world, location data should be shaping your strategy.</p>
+      <div class="usecase-prompt">"Map EV charging deserts overlaid with commuter density corridors"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ AI + MAPBOX DIFFERENTIATOR ═══════ -->
+<section class="diff-section reveal" id="ai">
+  <div class="diff-bg-grid"></div>
+  <div class="diff-inner">
+    <div>
+      <div class="section-number">03 — Our Edge</div>
+      <h2 class="diff-title">Where <em>AI</em> meets <em>geography</em></h2>
+      <div class="diff-body">
+        <p>Most mapping tools show you what is. We build systems that reveal what's hidden, what's coming, and what to do about it.</p>
+        <p>By combining Mapbox's rendering power with AI-driven spatial analysis and deep expertise in urban systems, we create intelligence that's not available off the shelf — and not possible without understanding both the technology and the territory.</p>
+      </div>
+    </div>
+    <div class="diff-cards">
+      <div class="diff-card">
+        <h4>AI-Powered Pattern Detection</h4>
+        <p>Surface spatial relationships humans miss — clustering, anomalies, and correlations across millions of data points, automated and visual.</p>
+      </div>
+      <div class="diff-card">
+        <h4>Natural Language Map Queries</h4>
+        <p>Ask a question in plain English, get a map. We're building interfaces where non-technical users can explore spatial data conversationally.</p>
+      </div>
+      <div class="diff-card">
+        <h4>Predictive Spatial Modeling</h4>
+        <p>Combine historical data with machine learning to project risk, opportunity, and change — from flood exposure to market shifts to infrastructure failure.</p>
+      </div>
+      <div class="diff-card">
+        <h4>Evidence Frameworks</h4>
+        <p>Every visualization ships with methodology documentation. Our maps aren't just beautiful — they're defensible. Built for policy, publication, and public scrutiny.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section class="about-section reveal" id="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <div class="section-number">04 — Who We Are</div>
+      <h3 class="about-name">Judy Huynh</h3>
+      <div class="about-role">Founder &amp; Principal, HYPERLOCO LLC</div>
+      <div class="about-bio">
+        <p>I'm an urban planner, geospatial researcher, and professor building at the intersection of mapping, AI, and civic intelligence.</p>
+        <p>I've spent years making spatial analysis that shapes policy, informs markets, and moves public opinion. Now I'm building a studio that brings that same rigor to every industry and audience that needs to understand place.</p>
+        <p>HYPERLOCO exists because maps shouldn't be locked inside GIS departments. The most powerful questions about our cities, our environment, and our future are spatial — and the people asking them deserve tools as sophisticated as the questions themselves.</p>
+      </div>
+    </div>
+    <div>
+      <div class="proof-grid">
+        <div class="proof-item">
+          <div class="proof-value">380+</div>
+          <div class="proof-label">Media citations including NYT, WaPo, AP</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-value">$117.9B</div>
+          <div class="proof-label">Federal spending analyzed spatially</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-value">99.5%</div>
+          <div class="proof-label">Of congressional districts mapped</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-value">3.4M</div>
+          <div class="proof-label">Properties analyzed in NJ flood study</div>
+        </div>
+      </div>
+      <div class="cred-list">
+        <div class="cred-item"><div class="cred-bullet"></div><span>Adjunct Professor, NYU Wagner — Hazard Mitigation & Risk Mapping</span></div>
+        <div class="cred-item"><div class="cred-bullet"></div><span>Lead Researcher, Rebuild by Design — National disaster analysis</span></div>
+        <div class="cred-item"><div class="cred-bullet"></div><span>NYC Emergency Management — Climate gentrification platform</span></div>
+        <div class="cred-item"><div class="cred-bullet"></div><span>Port Authority of NY & NJ — 3D geospatial visualization</span></div>
+        <div class="cred-item"><div class="cred-bullet"></div><span>NYC DOT — Smart Curbs geospatial analysis & design</span></div>
+        <div class="cred-item"><div class="cred-bullet"></div><span>Urban Design Forum Fellow & ULI Young Leaders</span></div>
+        <div class="cred-item"><div class="cred-bullet"></div><span>MUP, NYU Wagner — Dean's Award for Leadership, 3.8 GPA</span></div>
+        <div class="cred-item"><div class="cred-bullet"></div><span>ArcGIS Pro · QGIS · Mapbox GL JS · FEMA · HUD · Census</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section class="cta-section reveal" id="contact">
+  <div class="section-number">05 — Let's Work Together</div>
+  <h2>What does your <em>place</em> need to say?</h2>
+  <p class="cta-sub">
+    Whether it's a map, a platform, an analysis, or an idea you're not sure how to execute — tell us about it. We'll follow up within 48 hours.
+  </p>
+  <div class="inquiry-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@org.com">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Organization</label>
+      <input type="text" placeholder="Company, agency, publication, or independent">
+    </div>
+    <div class="form-group">
+      <label>What kind of project?</label>
+      <select>
+        <option value="" disabled selected>Select a category</option>
+        <option>Interactive Map / Platform</option>
+        <option>Urban Planning & Analysis</option>
+        <option>Community Engagement Tool</option>
+        <option>Data Visualization</option>
+        <option>Place Branding / Storytelling</option>
+        <option>Research & Spatial Evidence</option>
+        <option>AI + Geospatial</option>
+        <option>Not sure yet — let's talk</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tell us about it</label>
+      <textarea placeholder="What are you trying to build, understand, or communicate? Be as specific or open-ended as you'd like."></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Timeline</label>
+        <select>
+          <option value="" disabled selected>When do you need it?</option>
+          <option>Urgent — within 2 weeks</option>
+          <option>Standard — 1-2 months</option>
+          <option>Flexible — no rush</option>
+          <option>Just exploring</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Budget Range</label>
+        <select>
+          <option value="" disabled selected>Approximate budget</option>
+          <option>Under $5,000</option>
+          <option>$5,000 – $15,000</option>
+          <option>$15,000 – $50,000</option>
+          <option>$50,000+</option>
+          <option>Let's discuss</option>
+        </select>
+      </div>
+    </div>
+    <button class="form-submit">Send Your Project Brief →</button>
+    <p class="form-note">No commitment. We'll review and respond with a tailored proposal.</p>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-left">© 2026 HYPERLOCO LLC · Brooklyn, NY</div>
+  <div class="footer-right">
+    <a href="mailto:hello@judyhuynh.ca">hello@judyhuynh.ca</a>
+    <a href="https://www.linkedin.com/in/judyhuynh" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+<!-- ═══════ JS ═══════ -->
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav shadow
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow =
+      window.scrollY > 40 ? '0 1px 20px rgba(0,0,0,0.05)' : 'none';
+  });
+</script>
+
+</body>
+</html>
